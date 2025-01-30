@@ -1,23 +1,27 @@
-name: PR Workflow by ${{ github.actor }}
+name: CI
+run-name: PR Workflow ${{ github.actor }}
 
 on:
   pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
 
 env:
-  GITHUB_ACTIONS: "true"
+  GITHUB_ACTIONS: true
 
 jobs:
   github-task-job:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Show GITHUB_ACTIONS environment variable
-        run: echo "GITHUB_ACTIONS is set to $GITHUB_ACTIONS"
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Show branch and repository name
-        run: |
-          echo "Repository: ${{ github.repository }}"
-          echo "Branch: ${{ github.head_ref }}"
+    - name: Display GITHUB_ACTIONS environment variable
+      run: echo "GITHUB_ACTIONS is $GITHUB_ACTIONS"
 
-      - name: Show triggering event
-        run: echo "Triggered by event: ${{ github.event_name }}"
+    - name: Display branch and repository
+      run: echo "Name of the branch ${{ github.ref }} and your repository ${{ github.repository }}"
+
+    - name: Display the event that triggered the workflow
+      run: echo "Event that triggered the workflow ${{ github.event_name }}"
